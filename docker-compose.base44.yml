@@ -1,0 +1,25 @@
+# Base44 development environment.
+# Runs the project from the cloned source (bind-mounted) with live reload on port 3000.
+services:
+  web:
+    build:
+      context: .
+      dockerfile: .base44/Dockerfile.web
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - BASE44_PREVIEW_MODE
+    command:
+      - sh
+      - -ec
+      - exec live-server . --port=3000 --host=0.0.0.0 --no-browser --watch=/app
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/index.html"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s

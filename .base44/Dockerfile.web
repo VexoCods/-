@@ -1,0 +1,7 @@
+# Base44 sandbox runtime for the static frontend.
+# App source is bind-mounted at /app, so nothing but the dev server lives in the image.
+FROM node:22-alpine
+
+RUN npm install -g live-server@1.2.2
+
+WORKDIR /app
