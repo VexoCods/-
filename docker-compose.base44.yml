@@ -1,0 +1,35 @@
+# Base44 sandbox environment for Horizon Properties.
+#
+# The site is plain HTML/CSS/ES modules with no build step and no dependencies,
+# so the dev server runs straight from the repository source on a plain Node image
+# (no `image:` of a prebuilt app, no production Dockerfile, nothing to install).
+#
+#   docker compose -f docker-compose.base44.yml up -d --build
+#
+services:
+  web:
+    image: node:22
+    working_dir: /app
+    command: ["node", "tools/dev-server.mjs"]
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      # Preview-mode flag supplied by the platform; the app reads it only to
+      # decide whether to relax host/origin allowlists (see AGENTS.md).
+      - BASE44_PREVIEW_MODE
+    healthcheck:
+      # Probes real page responses from the running dev server, not just an open port.
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
