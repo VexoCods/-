@@ -1,8 +1,9 @@
-# Base44 sandbox environment for Horizon Properties.
+# Base44 sandbox environment for Caffeine Cove.
 #
 # The site is plain HTML/CSS/ES modules with no build step and no dependencies,
 # so the dev server runs straight from the repository source on a plain Node image
 # (no `image:` of a prebuilt app, no production Dockerfile, nothing to install).
+# Source edits are picked up live by the dev server's file watcher.
 #
 #   docker compose -f docker-compose.base44.yml up -d --build
 #

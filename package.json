@@ -1,8 +1,8 @@
 {
-  "name": "horizon-properties",
+  "name": "caffeine-cove",
   "version": "1.0.0",
   "private": true,
-  "description": "Horizon Properties — premium real estate website (static HTML/CSS/ES modules).",
+  "description": "Caffeine Cove — premium cafe website (static HTML/CSS/ES modules).",
   "type": "module",
   "scripts": {
     "dev": "node tools/dev-server.mjs"

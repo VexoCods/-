@@ -1,56 +1,64 @@
 /**
- * Inline SVG icons — thin-line, 24px grid, currentColor.
- * Kept as strings so components can compose them directly into templates.
+ * Inline SVG icon set. Line icons are drawn on a 24×24 grid and inherit
+ * `currentColor`, so they take the colour of the text they sit beside.
  */
 
-const PATHS = {
-  heart: '<path d="M12 20.2C9.9 18.6 4.5 14.9 4.5 10.6A4.1 4.1 0 0 1 12 8.1a4.1 4.1 0 0 1 7.5 2.5c0 4.3-5.4 8-7.5 9.6Z"/>',
-  phone:
-    '<path d="M6.6 3.8h2.7l1.4 3.4-1.7 1.3a11.4 11.4 0 0 0 5.4 5.4l1.3-1.7 3.4 1.4v2.7a1.9 1.9 0 0 1-2.1 1.9A16.6 16.6 0 0 1 4.7 5.9 1.9 1.9 0 0 1 6.6 3.8Z"/>',
-  mail: '<rect x="3.2" y="5.5" width="17.6" height="13" rx="2"/><path d="m3.6 7.2 8.4 5.6 8.4-5.6"/>',
-  mapPin: '<path d="M12 21s6.5-5.4 6.5-10.2A6.5 6.5 0 0 0 5.5 10.8C5.5 15.6 12 21 12 21Z"/><circle cx="12" cy="10.6" r="2.4"/>',
-  bed: '<path d="M3.5 18.5v-11"/><path d="M3.5 13.2h17v5.3"/><path d="M3.5 10.6h5.8a2 2 0 0 1 2 2v.6"/><path d="M11.3 13.2h9.2a2 2 0 0 1 2 2v3.3"/><circle cx="7.4" cy="9.1" r="1.6"/>',
-  bath: '<path d="M3.5 12.5h17v2.6a3.4 3.4 0 0 1-3.4 3.4H6.9a3.4 3.4 0 0 1-3.4-3.4Z"/><path d="M6.4 12.5V6.9a2.4 2.4 0 0 1 4.3-1.4"/><path d="M7.6 18.5 6.6 21M16.4 18.5l1 2.5"/>',
-  area: '<rect x="4.2" y="4.2" width="15.6" height="15.6" rx="1.4"/><path d="M8.4 4.2v2.2M15.6 4.2v2.2M4.2 8.4h2.2M4.2 15.6h2.2M17.8 8.4h2M17.8 15.6h2"/>',
-  arrowRight: '<path d="M4.5 12h14"/><path d="m13 6.5 5.5 5.5-5.5 5.5"/>',
-  arrowLeft: '<path d="M19.5 12h-14"/><path d="M11 6.5 5.5 12 11 17.5"/>',
-  arrowUpRight: '<path d="M7 17 17 7"/><path d="M8.6 7H17v8.4"/>',
-  arrowDown: '<path d="M12 4.5v14"/><path d="m6.5 13 5.5 5.5L17.5 13"/>',
-  chevronLeft: '<path d="m14 6-6 6 6 6"/>',
-  chevronRight: '<path d="m10 6 6 6-6 6"/>',
-  chevronDown: '<path d="m6 10 6 6 6-6"/>',
-  close: '<path d="m6 6 12 12M18 6 6 18"/>',
-  check: '<path d="m5 12.8 4.6 4.6L19 7"/>',
-  search: '<circle cx="11" cy="11" r="6.2"/><path d="m15.6 15.6 4.4 4.4"/>',
-  sliders: '<path d="M4.5 8h11M18.5 8h1M4.5 16h5M12.5 16h7"/><circle cx="16.6" cy="8" r="1.9"/><circle cx="10.6" cy="16" r="1.9"/>',
-  calendar: '<rect x="3.8" y="5.4" width="16.4" height="14.8" rx="2"/><path d="M3.8 10h16.4M8.4 3.6v3.4M15.6 3.6v3.4"/>',
-  clock: '<circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 1.9"/>',
-  expand: '<path d="M9 4.5H4.5V9M15 4.5h4.5V9M15 19.5h4.5V15M9 19.5H4.5V15"/>',
-  key: '<circle cx="7.8" cy="16.2" r="4.2"/><path d="m10.9 13.2 8.6-8.6"/><path d="m16.6 7.5 2.1 2.1"/><path d="m14.2 9.9 2.1 2.1"/><path d="M3.4 21.2h17.2"/>',
-  home: '<path d="M4.2 10.6 12 4.2l7.8 6.4v8.2a1.4 1.4 0 0 1-1.4 1.4H5.6a1.4 1.4 0 0 1-1.4-1.4Z"/><path d="M9.6 20.2v-5.4h4.8v5.4"/>',
-  building: '<rect x="4.6" y="3.8" width="14.8" height="16.4" rx="1.4"/><path d="M8.6 7.6h2.4M13 7.6h2.4M8.6 11.4h2.4M13 11.4h2.4M10 20.2v-4.4h4v4.4"/>',
-  compass: '<circle cx="12" cy="12" r="8.2"/><path d="m14.9 9.1-1.7 4.1-4.1 1.7 1.7-4.1Z"/>',
-  shield: '<path d="M12 3.6 5.4 6.2v5.4c0 4 2.8 7.4 6.6 8.8 3.8-1.4 6.6-4.8 6.6-8.8V6.2Z"/><path d="m9.4 12 1.9 1.9 3.5-3.6"/>',
-  sparkle: '<path d="M12 3.8 13.7 9l5.2 1.7-5.2 1.7L12 17.6l-1.7-5.2L5.1 10.7 10.3 9Z"/><path d="M18.4 16.4l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7Z"/>',
-  users: '<circle cx="9.6" cy="8.6" r="3.4"/><path d="M3.6 19.4a6.4 6.4 0 0 1 12 0"/><path d="M16.4 6.2a3.2 3.2 0 0 1 0 6.2M18.2 19.4a6.6 6.6 0 0 0-2-4.6"/>',
-  quote: '<path d="M9.6 6.4c-3 1.2-4.6 3.4-4.6 6.4v4.8h5.6v-5.6H7.9c0-1.7.8-2.9 2.6-3.7Z"/><path d="M19.4 6.4c-3 1.2-4.6 3.4-4.6 6.4v4.8H20.4v-5.6h-2.7c0-1.7.8-2.9 2.6-3.7Z"/>',
-  instagram:
-    '<rect x="4" y="4" width="16" height="16" rx="4.4"/><circle cx="12" cy="12" r="3.5"/><circle cx="16.6" cy="7.4" r="0.9" fill="currentColor" stroke="none"/>',
-  linkedin: '<rect x="4" y="4" width="16" height="16" rx="2.2"/><path d="M8.2 10.4v6M8.2 7.6v.1M11.6 16.4v-3.2a2.1 2.1 0 0 1 4.2 0v3.2"/><path d="M11.6 10.4v6"/>',
-  facebook: '<path d="M14.6 8.4h2.2M14.6 20.2V8.6a2.4 2.4 0 0 1 2.4-2.4h.8"/><path d="M11 12h5.6"/>',
-  youtube: '<rect x="3.4" y="6.4" width="17.2" height="11.2" rx="3.4"/><path d="m10.8 9.9 4.4 2.6-4.4 2.6Z"/>',
+const LINE = {
+  cart: '<circle cx="9.5" cy="20" r="1.5"/><circle cx="17.5" cy="20" r="1.5"/><path d="M3 4h2.1l2.2 11.3a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.2L20.4 8H6.2"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  minus: '<path d="M5 12h14"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  "arrow-right": '<path d="M4 12h15M13 6l6 6-6 6"/>',
+  "arrow-up-right": '<path d="M7 17L17 7M8 7h9v9"/>',
+  check: '<path d="M4 12.5l5 5L20 6.5"/>',
+  phone: '<path d="M6.5 3h3l1.5 4-2 1.4a12 12 0 0 0 5.6 5.6L16 12l4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 6.2 2 2 0 0 1 6 4z"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>',
+  pin: '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>',
+  directions: '<path d="M12 3l9 9-9 9-9-9z"/><path d="M11 14v-3.2h3.2M14.2 10.8L16 12.6"/>',
+  cup: '<path d="M4 9h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M16 10h1.8a2.2 2.2 0 0 1 0 4.4H16"/><path d="M7 3.2c0 1-.8 1.2-.8 2.2M10.2 3c0 1-.8 1.2-.8 2.2"/>',
+  bean: '<ellipse cx="12" cy="12" rx="6.5" ry="8.5" transform="rotate(38 12 12)"/><path d="M8.6 8.4c2.4 1.6 4 4.6 5.2 8.4"/>',
+  leaf: '<path d="M4 20c0-8 5-14 16-15 0 11-5 16-13 16z"/><path d="M5 19C9 14 13 11 19 7"/>',
+  chef: '<path d="M7 13a4 4 0 1 1 1.2-7.8 4.2 4.2 0 0 1 7.6 0A4 4 0 1 1 17 13z"/><path d="M7 13v5.5a1.5 1.5 0 0 0 1.5 1.5h7a1.5 1.5 0 0 0 1.5-1.5V13"/>',
+  sofa: '<path d="M4 12V9a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v3"/><path d="M4 12a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/><path d="M7 19v1.5M17 19v1.5"/>',
+  star: '<path d="M12 3.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.5 9.6l5.9-.8z"/>',
+  "shield-check": '<path d="M12 3l7 2.8v5.4c0 4.4-3 8-7 9.8-4-1.8-7-5.4-7-9.8V5.8z"/><path d="M9 12l2.2 2.2L15.4 10"/>',
+  sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.8v.4"/>',
+  bag: '<path d="M5.5 8h13l1 12h-15z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
 };
 
-/**
- * @param {keyof typeof PATHS} name
- * @param {{className?: string, strokeWidth?: number}} [options]
- */
-export function icon(name, { className = "", strokeWidth = 1.5 } = {}) {
-  const body = PATHS[name] ?? PATHS.arrowRight;
-  return `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
+const SOLID = {
+  instagram:
+    '<path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.22 1 .48 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.1a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/>',
+  facebook:
+    '<path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.3-1.5 1.6-1.5h1.7V3.6A22 22 0 0 0 14.3 3.5c-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.7v8z"/>',
+  tiktok:
+    '<path d="M16.5 3h-2.9v11.3a2.4 2.4 0 1 1-2-2.4v-3a5.4 5.4 0 1 0 4.9 5.4V8.9a6.4 6.4 0 0 0 3.5 1.1V7.1a3.6 3.6 0 0 1-3.5-3.5z"/>',
+};
+
+function wrap(paths, fill) {
+  return `<svg viewBox="0 0 24 24" fill="${fill ? "currentColor" : "none"}" ${
+    fill ? "" : 'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'
+  } aria-hidden="true">${paths}</svg>`;
 }
 
-/** The Horizon mark: a roofline above a horizon rule. */
-export function brandMark(className = "brand__mark") {
-  return `<svg class="${className}" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.6 20.4 18 7l13.4 13.4"/><path d="M9.8 20.4v9.2h16.4v-9.2"/><path d="M2 32.6h32" opacity=".45"/></svg>`;
+/** Line icon markup, sized by CSS. */
+export function icon(name) {
+  return wrap(LINE[name] ?? LINE.info, false);
+}
+
+/** Filled brand/social icon markup. */
+export function socialIcon(name) {
+  return wrap(SOLID[name] ?? SOLID.instagram, true);
+}
+
+/** Caffeine Cove monogram: a cup drawn in a single continuous line. */
+export function brandMark() {
+  return `<svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+    <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+    <path d="M11 16h14v7.5A4.5 4.5 0 0 1 20.5 28h-5A4.5 4.5 0 0 1 11 23.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M25 17.5h2.4a3.1 3.1 0 0 1 0 6.2H25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M15.6 12.4c0-1.2 1-1.4 1-2.6M19.6 12.4c0-1.2 1-1.4 1-2.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+  </svg>`;
 }

@@ -1,52 +1,40 @@
 /**
- * Horizon Properties — application entry point.
- * Mounts the shared chrome, then hands off to the module for the current page
- * (declared with `data-page` on <body>).
+ * Caffeine Cove — application entry point.
+ * Mounts the shared chrome, wires global interactions, then hands off to the
+ * module for the current page (declared with `data-page` on <body>).
  */
 
 import { mountHeader } from "./components/header.js";
 import { mountFooter } from "./components/footer.js";
 import { initReveal } from "./components/reveal.js";
-import { syncSavedButtons } from "./components/property-card.js";
-import { bindEnquiryTriggers } from "./components/enquiry-dialog.js";
-import { showToast } from "./components/toast.js";
-import { saved } from "./lib/store.js";
+import { openProductDialog } from "./components/product-dialog.js";
+import { PRODUCTS } from "./data/menu.js";
 
 import { initHome } from "./pages/home.js";
-import { initProperties } from "./pages/properties.js";
-import { initProperty } from "./pages/property.js";
-import { initAbout } from "./pages/about.js";
-import { initServices } from "./pages/services.js";
-import { initTeam } from "./pages/team.js";
+import { initMenuPage } from "./pages/menu.js";
+import { initProduct } from "./pages/product.js";
+import { initGallery } from "./pages/gallery.js";
 import { initContact } from "./pages/contact.js";
-import { initFavorites } from "./pages/favorites.js";
+import { initCartPage } from "./pages/cart.js";
 
 const PAGES = {
   home: initHome,
-  properties: initProperties,
-  property: initProperty,
-  about: initAbout,
-  services: initServices,
-  team: initTeam,
+  menu: initMenuPage,
+  product: initProduct,
+  gallery: initGallery,
   contact: initContact,
-  favorites: initFavorites,
+  cart: initCartPage,
 };
 
-/** Saved-property toggles are global: they work from any card, on any page. */
-function bindSavedToggles() {
+/** Quick-add is global: any "Add" button, on any page, opens the dialog. */
+function bindQuickAdd() {
   document.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-saved-toggle]");
+    const button = event.target.closest("[data-add-product]");
     if (!button) return;
     event.preventDefault();
-    const isSaved = saved.toggle(button.dataset.savedToggle);
-    showToast(
-      isSaved ? "Added to your shortlist" : "Removed from your shortlist",
-      isSaved ? "check" : "close",
-    );
-    document.dispatchEvent(new CustomEvent("horizon:saved-change"));
+    const product = PRODUCTS.find((entry) => entry.id === button.dataset.addProduct);
+    if (product) openProductDialog(product);
   });
-
-  saved.subscribe(() => syncSavedButtons());
 }
 
 async function boot() {
@@ -56,21 +44,18 @@ async function boot() {
   const footerTarget = document.querySelector("[data-footer]");
   if (footerTarget) mountFooter(footerTarget);
 
-  bindSavedToggles();
-  bindEnquiryTriggers(document);
+  bindQuickAdd();
 
   const page = document.body.dataset.page;
   const init = PAGES[page];
-
   if (init) {
     try {
       await init();
     } catch (error) {
-      console.error(`[horizon] failed to initialise the "${page}" page`, error);
+      console.error(`[cove] failed to initialise the "${page}" page`, error);
     }
   }
 
-  syncSavedButtons();
   initReveal();
 }
 

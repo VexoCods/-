@@ -3,16 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Horizon Properties — Exceptional Homes &amp; Investments</title>
-<meta name="description" content="Horizon Properties represents architectural houses and prime investments across 38 cities. Browse villas, estates and penthouses with a specialist advisor.">
+<title>Caffeine Cove — Crafted moments in every cup</title>
+<meta name="description" content="Caffeine Cove is a specialty coffee house on Harbour Lane. Handcrafted drinks, all-day brunch and freshly baked pastries, made for slow moments and good company.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#0A1626">
-<meta property="og:title" content="Horizon Properties — Exceptional Homes &amp; Investments">
-<meta property="og:description" content="Premium properties in prime locations, represented by specialists.">
+<meta name="theme-color" content="#100d0b">
+<meta property="og:title" content="Caffeine Cove — Crafted moments in every cup">
+<meta property="og:description" content="Specialty coffee, handcrafted drinks and delicious bites made for slow moments and good company.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="assets/images/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@300;400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/components.css">
@@ -24,158 +25,152 @@
 
 <main id="main">
 
-  <!-- Hero ------------------------------------------------------------------ -->
+  <!-- Hero ------------------------------------------------------------- -->
   <section class="hero" data-hero aria-labelledby="hero-title">
-    <div class="hero__media">
-      <img
-        src="assets/images/hero.jpg"
-        alt="A modern glass-walled villa at dusk, lit interiors opening onto a pool terrace"
-        width="2200" height="1300" fetchpriority="high" decoding="async">
-    </div>
-    <div class="hero__scrim" aria-hidden="true"></div>
-
     <div class="container hero__inner">
-      <p class="label label--plain hero__enter" style="--d:60ms">Luxury real estate · Est. 2004</p>
-      <h1 class="hero__title hero__enter" id="hero-title" style="--d:170ms">Discover Exceptional<br>Homes &amp; Investments</h1>
-      <p class="hero__lead hero__enter" style="--d:300ms">
-        Premium properties in prime locations. Find your dream home or the perfect investment with confidence.
-      </p>
-      <div class="hero__actions hero__enter" style="--d:430ms">
-        <a class="btn btn--light" href="properties.html">
-          <span>Explore Properties</span>
-          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h14"/><path d="m13 6.5 5.5 5.5-5.5 5.5"/></svg>
+      <div class="hero__content">
+        <p class="label label--plain">Caffeine Cove · Est. 2016</p>
+        <h1 class="hero__title" id="hero-title">Crafted moments in <em>every cup</em></h1>
+        <p class="lead hero__lead">Specialty coffee, handcrafted drinks and delicious bites made for slow moments and good company.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary btn--lg" href="menu.html">Explore Menu</a>
+          <a class="btn btn--ghost btn--lg" href="about.html">Our Story</a>
+        </div>
+      </div>
+
+      <figure class="hero__media">
+        <img src="assets/images/hero.jpg" alt="A freshly poured latte with delicate art, surrounded by roasted coffee beans" width="1800" height="1200" fetchpriority="high" decoding="async">
+        <figcaption class="hero__stamp">Open daily from 7am</figcaption>
+      </figure>
+    </div>
+
+    <div class="container">
+      <div class="hero__foot">
+        <dl class="hero__facts">
+          <div class="hero__fact">
+            <dt>Find us</dt>
+            <dd>Harbour Lane</dd>
+          </div>
+          <div class="hero__fact">
+            <dt>Weekdays</dt>
+            <dd>7:00 – 19:00</dd>
+          </div>
+          <div class="hero__fact">
+            <dt>Roasted</dt>
+            <dd>Every week</dd>
+          </div>
+          <div class="hero__fact">
+            <dt>Baked</dt>
+            <dd>In-house daily</dd>
+          </div>
+        </dl>
+        <a class="link-arrow" href="menu.html">
+          See the full menu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
         </a>
-        <button class="btn btn--ghost" type="button" data-enquiry>
-          <span>Book a consultation</span>
-        </button>
-      </div>
-      <p class="hero__cue hero__enter" style="--d:600ms">
-        <span>Scroll</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5v14"/><path d="m6.5 13 5.5 5.5L17.5 13"/></svg>
-      </p>
-    </div>
-  </section>
-
-  <!-- Who we are ------------------------------------------------------------ -->
-  <section class="section" aria-labelledby="about-title">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-copy" data-reveal>
-          <p class="label">About us</p>
-          <h2 class="h2" id="about-title">Who We Are</h2>
-          <p class="lead">
-            At Horizon Properties, we connect people with extraordinary homes and smart investments.
-            Integrity, transparency, and client satisfaction are at the heart of everything we do.
-          </p>
-          <a class="btn btn--outline" href="about.html" style="margin-top:.75rem">
-            <span>Learn More</span>
-            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h14"/><path d="m13 6.5 5.5 5.5-5.5 5.5"/></svg>
-          </a>
-        </div>
-
-        <div class="about-collage" data-reveal data-reveal-delay="120">
-          <div class="about-collage__main">
-            <img src="assets/images/about-main.jpg" alt="A modern two-storey house with full-height glazing and a swimming pool" width="1300" height="980" loading="lazy" decoding="async">
-          </div>
-          <div class="about-collage__side">
-            <img src="assets/images/about-detail.jpg" alt="Detail of a dark panelled facade with warm vertical timber fins" width="900" height="1220" loading="lazy" decoding="async">
-          </div>
-          <a class="icon-btn icon-btn--lg about-collage__btn" href="properties.html" aria-label="Browse all properties">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8.6 7H17v8.4"/></svg>
-          </a>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- Featured properties --------------------------------------------------- -->
-  <section class="section section--sand" aria-labelledby="featured-title">
+  <!-- Strip ------------------------------------------------------------ -->
+  <div class="strip">
+    <div class="container strip__inner">
+      <span>Single-origin beans</span>
+      <span>Baked in-house daily</span>
+      <span>Oat · Almond · Soy</span>
+      <span>Open seven days</span>
+    </div>
+  </div>
+
+  <!-- Signature favorites ---------------------------------------------- -->
+  <section class="section" aria-labelledby="favorites-title">
     <div class="container">
       <div class="section-head" data-reveal>
-        <p class="label">Featured</p>
-        <h2 class="h2" id="featured-title">Featured Properties</h2>
-        <p class="lead">A short list of houses we are representing now — drag, swipe or use the arrows to move through them.</p>
-      </div>
-    </div>
-    <div class="container" style="margin-top:var(--s-4)" data-featured-carousel data-reveal></div>
-  </section>
-
-  <!-- Services -------------------------------------------------------------- -->
-  <section class="section section--navy" aria-labelledby="services-title">
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <p class="label">Services</p>
-        <h2 class="h2" id="services-title">Everything a property decision needs</h2>
-        <p class="lead">Six services, delivered by the same specialists — from the first valuation to the day you get the keys.</p>
-      </div>
-      <ul data-services-list data-reveal data-reveal-delay="120" style="margin-top:var(--s-4)"></ul>
-    </div>
-  </section>
-
-  <!-- Why choose Horizon ---------------------------------------------------- -->
-  <section class="section section--sand" aria-labelledby="why-title">
-    <div class="container">
-      <div class="why-grid">
-        <div class="why-media" data-reveal>
-          <img src="assets/images/editorial/building.jpg" alt="Geometric white concrete facade with deep openings" width="1100" height="1400" loading="lazy" decoding="async">
+        <div class="section-head__title">
+          <p class="label">Signature Favorites</p>
+          <h2 id="favorites-title" style="margin-top:0.75rem">The drinks we're known for</h2>
         </div>
+        <a class="link-arrow" href="menu.html">
+          View the full menu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="featured-grid" data-featured data-reveal></div>
+    </div>
+  </section>
 
-        <div data-reveal data-reveal-delay="120">
-          <p class="label">Why Horizon</p>
-          <h2 class="h2" id="why-title" style="margin-top:.75rem">Why Choose Horizon</h2>
-          <p class="lead" style="margin-top:.75rem">
-            A specialist practice, deliberately small, so that every instruction gets the attention of a partner rather than a call centre.
-          </p>
-          <ul class="why-list" data-why-list></ul>
-          <div class="stats-strip" data-stats></div>
+  <!-- Story ------------------------------------------------------------ -->
+  <section class="section" aria-labelledby="story-title" style="background:var(--espresso-950)">
+    <div class="container story__inner">
+      <div class="story__media" data-reveal>
+        <img src="assets/images/about-main.jpg" alt="The warm, wood-lined interior of Caffeine Cove" loading="lazy" decoding="async" width="1500" height="1800">
+        <div class="story__detail">
+          <img src="assets/images/about-detail.jpg" alt="Baristas working behind the service counter" loading="lazy" decoding="async" width="800" height="800">
         </div>
       </div>
+
+      <div class="story__body" data-reveal data-reveal-delay="120">
+        <p class="label">Our Story</p>
+        <h2 id="story-title" style="margin-top:0.75rem">More than coffee.</h2>
+        <p style="margin-top:1.25rem">Caffeine Cove began with a single espresso machine and a stubborn belief that a neighbourhood deserves better than a rushed cup. Ten years on, we still roast in small batches, bake before sunrise and greet most of our guests by name.</p>
+        <p>It's a place for slow mornings, creative conversations and unhurried afternoons — where the food is made properly and nobody minds if you stay a while.</p>
+
+        <div class="story__points">
+          <p class="story__point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><span>Coffee roasted in small weekly batches</span></p>
+          <p class="story__point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><span>Bread and pastries baked on site every morning</span></p>
+          <p class="story__point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><span>Room to linger — no one is rushing you out</span></p>
+        </div>
+
+        <a class="btn btn--ghost" href="about.html" style="margin-top:2rem">Read our story</a>
+      </div>
     </div>
   </section>
 
-  <!-- Team ------------------------------------------------------------------ -->
-  <section class="section" aria-labelledby="team-title">
+  <!-- Benefits --------------------------------------------------------- -->
+  <section class="section" aria-labelledby="why-title">
     <div class="container">
       <div class="section-head section-head--center" data-reveal>
-        <p class="label label--plain">The people</p>
-        <h2 class="h2" id="team-title">Advisors who know the market</h2>
-        <p class="lead">Four specialists, each covering a defined patch of the market — so you speak to someone who has seen the comparable sales themselves.</p>
+        <p class="label">Why Caffeine Cove</p>
+        <h2 class="section-head__title" id="why-title" style="margin-top:0.75rem">Built around the cup</h2>
       </div>
 
-      <div class="grid-cards" data-team-preview data-reveal data-reveal-delay="120" style="margin-top:var(--s-5)"></div>
-
-      <p style="text-align:center; margin-top:var(--s-5)">
-        <a class="btn btn--outline" href="team.html">
-          <span>Meet the full team</span>
-          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h14"/><path d="m13 6.5 5.5 5.5-5.5 5.5"/></svg>
-        </a>
-      </p>
+      <div class="benefits" data-reveal>
+        <div class="benefit">
+          <div class="benefit__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="6.5" ry="8.5" transform="rotate(38 12 12)"/><path d="M8.6 8.4c2.4 1.6 4 4.6 5.2 8.4"/></svg></div>
+          <h3>Specialty Coffee</h3>
+          <p>Seasonal single-origins and a house blend, roasted in small batches and rested before it reaches the bar.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c0-8 5-14 16-15 0 11-5 16-13 16z"/><path d="M5 19C9 14 13 11 19 7"/></svg></div>
+          <h3>Fresh Ingredients</h3>
+          <p>Produce from growers we know, dairy from a single farm, and nothing on the menu we wouldn't serve at home.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13a4 4 0 1 1 1.2-7.8 4.2 4.2 0 0 1 7.6 0A4 4 0 1 1 17 13z"/><path d="M7 13v5.5a1.5 1.5 0 0 0 1.5 1.5h7a1.5 1.5 0 0 0 1.5-1.5V13"/></svg></div>
+          <h3>Handcrafted Daily</h3>
+          <p>Everything is made to order — from the pastries in the case to the syrups we cook down each week.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12V9a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v3"/><path d="M4 12a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/><path d="M7 19v1.5M17 19v1.5"/></svg></div>
+          <h3>A Place to Slow Down</h3>
+          <p>Deep seats, good light and no time limit on the table. Come for the coffee, stay for the afternoon.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Call to action -------------------------------------------------------- -->
-  <section class="cta-band" aria-labelledby="cta-title">
-    <div class="container cta-band__inner">
-      <span class="cta-band__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="7.8" cy="15.6" r="4.4"/>
-          <path d="m11.1 12.3 8.6-8.6"/>
-          <path d="m16.8 6.6 2.1 2.1"/>
-          <path d="m14.4 9 2.1 2.1"/>
-          <path d="M3.4 21.4h17.2" opacity=".5"/>
-        </svg>
-      </span>
-
-      <div class="cta-band__copy">
-        <h2 class="h2" id="cta-title">Ready to Find Your Perfect Property?</h2>
-        <p class="muted">Let our experts guide you to the right home or investment.</p>
-      </div>
-
-      <div class="cta-band__actions">
-        <button class="btn" type="button" data-enquiry>
-          <span>Get in Touch</span>
-          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h14"/><path d="m13 6.5 5.5 5.5-5.5 5.5"/></svg>
-        </button>
+  <!-- CTA -------------------------------------------------------------- -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-band" data-reveal>
+        <div class="cta-band__media">
+          <img src="assets/images/cta.jpg" alt="Roasted coffee beans catching warm light" loading="lazy" decoding="async" width="1800" height="1000">
+        </div>
+        <div class="cta-band__inner">
+          <p class="label">Ready when you are</p>
+          <h2 style="margin-top:0.75rem">Your next favorite cup is waiting.</h2>
+          <a class="btn btn--primary btn--lg" href="menu.html">Explore the Menu</a>
+        </div>
       </div>
     </div>
   </section>
