@@ -1,0 +1,32 @@
+{
+  "name": "digital-menu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Digital restaurant menu (Persian/English, RTL) with a secure admin panel.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "create-admin": "node scripts/create-admin.js",
+    "qr": "node scripts/generate-qr.js",
+    "seed": "node scripts/seed-demo.js",
+    "package": "node scripts/package.js",
+    "audit": "npm audit --omit=dev"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.1",
+    "express-session": "^1.18.0",
+    "helmet": "^7.1.0",
+    "multer": "^2.0.0",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.33.5"
+  }
+}

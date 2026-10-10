@@ -1,0 +1,56 @@
+<%#
+  Sign-in page.
+  The form posts to /admin/login with a CSRF token; failures come back as a
+  flash message so the page itself never reveals whether the account exists.
+%>
+<%- include('../partials/head', { pageTitle, extraCss: 'admin.css' }) %>
+  <body class="page-admin page-admin--login">
+    <main class="login">
+      <div class="login__card">
+        <p class="login__brand"><%= appName %></p>
+        <h1 class="login__title"><%= t('admin.login') %></h1>
+
+        <%- include('../partials/flash') %>
+
+        <form class="form" method="post" action="/admin/login">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+          <div class="field">
+            <label class="field__label" for="email"><%= t('admin.email') %></label>
+            <input
+              class="field__input"
+              id="email"
+              name="email"
+              type="email"
+              dir="ltr"
+              required
+              maxlength="254"
+              autocomplete="username"
+              inputmode="email"
+              autocapitalize="none"
+              spellcheck="false"
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="password"><%= t('admin.password') %></label>
+            <input
+              class="field__input"
+              id="password"
+              name="password"
+              type="password"
+              dir="ltr"
+              required
+              minlength="1"
+              maxlength="200"
+              autocomplete="current-password"
+            />
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">
+            <%= t('admin.login_submit') %>
+          </button>
+        </form>
+      </div>
+    </main>
+<%- include('../partials/foot') %>

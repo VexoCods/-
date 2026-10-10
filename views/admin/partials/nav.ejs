@@ -1,0 +1,47 @@
+<%#
+  Admin top bar + navigation.
+  The sign-out control is a POST form carrying a CSRF token: signing out is a
+  state change, and a GET link could be triggered by any other website.
+%>
+<header class="admin-top">
+  <div class="admin-top__bar">
+    <a class="admin-top__brand" href="/admin">
+      <span class="admin-top__brand-mark" aria-hidden="true">◆</span>
+      <%= t('admin.title') %>
+    </a>
+    <div class="admin-top__tools">
+      <a class="lang-switch" href="<%= langSwitchUrl %>" hreflang="<%= otherLang %>"><%= t('lang.switch') %></a>
+      <a class="btn btn--ghost btn--sm" href="/" target="_blank" rel="noopener noreferrer">
+        <%= t('admin.back_to_menu') %>
+      </a>
+      <form class="inline-form" method="post" action="/admin/logout">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button class="btn btn--ghost btn--sm" type="submit"><%= t('admin.logout') %></button>
+      </form>
+    </div>
+  </div>
+
+  <nav class="admin-nav" aria-label="<%= t('admin.title') %>">
+    <a class="admin-nav__link<%= adminSection === 'items' ? ' is-active' : '' %>" href="/admin">
+      <%= t('admin.dashboard') %>
+    </a>
+    <a class="admin-nav__link<%= adminSection === 'categories' ? ' is-active' : '' %>" href="/admin/categories">
+      <%= t('admin.categories') %>
+    </a>
+    <a class="admin-nav__link<%= adminSection === 'preview' ? ' is-active' : '' %>" href="/admin/preview">
+      <%= t('admin.preview') %>
+    </a>
+    <a class="admin-nav__link<%= adminSection === 'qr' ? ' is-active' : '' %>" href="/admin/qr">
+      <%= t('admin.qr') %>
+    </a>
+    <a class="admin-nav__link<%= adminSection === 'password' ? ' is-active' : '' %>" href="/admin/password">
+      <%= t('admin.change_password') %>
+    </a>
+  </nav>
+
+  <% if (currentUser) { %>
+    <p class="admin-top__user">
+      <%= t('admin.signed_in_as') %>: <strong dir="ltr"><%= currentUser.email %></strong>
+    </p>
+  <% } %>
+</header>

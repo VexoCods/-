@@ -1,0 +1,16 @@
+<%# Generic error page. `detail` is only ever filled in development. %>
+<%- include('partials/head', { pageTitle: t('error.title') }) %>
+  <body class="page-error">
+    <main class="error-page">
+      <p class="error-page__code"><%= status %></p>
+      <h1 class="error-page__title"><%= t('error.title') %></h1>
+      <p class="error-page__message"><%= message %></p>
+      <p class="error-page__actions">
+        <a class="btn btn--primary" href="/"><%= t('menu.menu_link') %></a>
+        <a class="btn btn--ghost" href="/admin"><%= t('admin.title') %></a>
+      </p>
+      <% if (typeof detail !== 'undefined' && detail) { %>
+        <pre class="error-page__detail"><%= detail %></pre>
+      <% } %>
+    </main>
+<%- include('partials/foot') %>

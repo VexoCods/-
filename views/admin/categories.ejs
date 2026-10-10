@@ -1,0 +1,107 @@
+<%#
+  Category management: create, rename, reorder, delete.
+  A category that still contains items cannot be deleted (the server refuses and
+  explains what to do), which protects the owner's menu data.
+%>
+<%- include('../partials/head', { pageTitle, extraCss: 'admin.css' }) %>
+  <body class="page-admin">
+    <div class="admin-shell">
+      <%- include('partials/nav') %>
+
+      <main class="admin-main admin-main--narrow">
+        <%- include('../partials/flash') %>
+
+        <h1 class="admin-head__title"><%= t('admin.categories') %></h1>
+
+        <form class="form card" method="post" action="/admin/categories">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <div class="field-grid">
+            <div class="field">
+              <label class="field__label" for="new-name-fa"><%= t('admin.name_fa') %></label>
+              <input
+                class="field__input" id="new-name-fa" name="name_fa" type="text" required
+                maxlength="80" dir="rtl" lang="fa" value="<%= values.nameFa %>"
+              />
+              <% if (errors.name_fa) { %><p class="field__error"><%= errors.name_fa %></p><% } %>
+            </div>
+            <div class="field">
+              <label class="field__label" for="new-name-en"><%= t('admin.name_en') %></label>
+              <input
+                class="field__input" id="new-name-en" name="name_en" type="text"
+                maxlength="80" dir="ltr" lang="en" value="<%= values.nameEn %>"
+              />
+              <% if (errors.name_en) { %><p class="field__error"><%= errors.name_en %></p><% } %>
+            </div>
+          </div>
+          <div class="form__actions">
+            <button class="btn btn--primary" type="submit"><%= t('admin.add_category') %></button>
+          </div>
+        </form>
+
+        <% if (categories.length === 0) { %>
+          <p class="empty-state"><%= t('admin.no_categories') %></p>
+        <% } else { %>
+          <ul class="admin-list">
+            <% categories.forEach(function (category, index) { %>
+              <li class="admin-row">
+                <div class="admin-row__info">
+                  <p class="admin-row__name" lang="fa" dir="rtl"><%= category.name_fa %></p>
+                  <% if (category.name_en) { %>
+                    <p class="admin-row__sub" lang="en" dir="ltr"><%= category.name_en %></p>
+                  <% } %>
+                  <p class="admin-row__tags">
+                    <span class="tag"><%= category.item_count %> <%= t('admin.items_in_category') %></span>
+                    <span class="tag tag--muted"><%= category.active_count || 0 %> <%= t('admin.active') %></span>
+                    <span class="tag tag--muted"><%= t('admin.display_order') %>: <%= category.sort_order %></span>
+                  </p>
+                </div>
+
+                <div class="admin-row__actions">
+                  <div class="order-group" role="group" aria-label="<%= t('admin.display_order') %>">
+                    <% if (index > 0) { %>
+                      <form method="post" action="/admin/categories/<%= category.id %>/move">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                        <input type="hidden" name="direction" value="up" />
+                        <button class="icon-btn" type="submit" title="<%= t('admin.move_up') %>"
+                                aria-label="<%= t('admin.move_up') %>">↑</button>
+                      </form>
+                    <% } %>
+                    <% if (index < categories.length - 1) { %>
+                      <form method="post" action="/admin/categories/<%= category.id %>/move">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                        <input type="hidden" name="direction" value="down" />
+                        <button class="icon-btn" type="submit" title="<%= t('admin.move_down') %>"
+                                aria-label="<%= t('admin.move_down') %>">↓</button>
+                      </form>
+                    <% } %>
+                  </div>
+                  <a class="btn btn--sm btn--danger" href="/admin/categories/<%= category.id %>/delete">
+                    <%= t('admin.delete') %>
+                  </a>
+                </div>
+
+                <form class="form form--inline" method="post" action="/admin/categories/<%= category.id %>">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <div class="field">
+                    <label class="field__label" for="rename-fa-<%= category.id %>"><%= t('admin.rename_category') %> — <%= t('admin.name_fa') %></label>
+                    <input
+                      class="field__input" id="rename-fa-<%= category.id %>" name="name_fa" type="text"
+                      required maxlength="80" dir="rtl" lang="fa" value="<%= category.name_fa %>"
+                    />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="rename-en-<%= category.id %>"><%= t('admin.name_en') %></label>
+                    <input
+                      class="field__input" id="rename-en-<%= category.id %>" name="name_en" type="text"
+                      maxlength="80" dir="ltr" lang="en" value="<%= category.name_en %>"
+                    />
+                  </div>
+                  <button class="btn btn--sm" type="submit"><%= t('admin.save') %></button>
+                </form>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
+      </main>
+    </div>
+<%- include('../partials/foot') %>

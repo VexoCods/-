@@ -1,0 +1,122 @@
+<%#
+  Admin dashboard: every item, grouped by category, with edit / reorder /
+  activate / delete controls. Each control is its own small POST form so the
+  page works without JavaScript.
+%>
+<%- include('../partials/head', { pageTitle, extraCss: 'admin.css' }) %>
+  <body class="page-admin">
+    <div class="admin-shell">
+      <%- include('partials/nav') %>
+
+      <main class="admin-main">
+        <%- include('../partials/flash') %>
+
+        <div class="admin-head">
+          <h1 class="admin-head__title"><%= t('admin.dashboard') %></h1>
+          <a class="btn btn--primary" href="/admin/items/new"><%= t('admin.add_item') %></a>
+        </div>
+
+        <% if (categories.length === 0) { %>
+          <p class="empty-state">
+            <%= t('admin.no_categories') %>
+            <a href="/admin/categories"><%= t('admin.add_category') %></a>
+          </p>
+        <% } else if (items.length === 0) { %>
+          <p class="empty-state"><%= t('admin.no_items') %></p>
+        <% } %>
+
+        <% categories.forEach(function (category) {
+             const rows = items.filter(function (item) { return item.category_id === category.id; });
+             if (rows.length === 0) return;
+        %>
+          <section class="admin-group">
+            <div class="admin-group__head">
+              <h2 class="admin-group__title">
+                <span lang="fa" dir="rtl"><%= category.name_fa %></span>
+                <% if (category.name_en) { %>
+                  <span class="admin-group__title-en" lang="en" dir="ltr"><%= category.name_en %></span>
+                <% } %>
+              </h2>
+              <span class="tag"><%= rows.length %> <%= t('admin.items_in_category') %></span>
+            </div>
+
+            <ul class="admin-list">
+              <% rows.forEach(function (item, index) { %>
+                <li class="admin-row<%= item.is_active ? '' : ' admin-row--inactive' %>">
+                  <div class="admin-row__thumb">
+                    <img
+                      src="<%= item.image_path || '/static/img/placeholder-food.svg' %>"
+                      alt=""
+                      width="72" height="72" loading="lazy" decoding="async"
+                    />
+                  </div>
+
+                  <div class="admin-row__info">
+                    <p class="admin-row__name" lang="fa" dir="rtl"><%= item.name_fa %></p>
+                    <% if (item.name_en) { %>
+                      <p class="admin-row__sub" lang="en" dir="ltr"><%= item.name_en %></p>
+                    <% } %>
+                    <p class="admin-row__tags">
+                      <span class="tag">
+                        <%= formatPrice(item.price) %> <%= t('menu.currency') %>
+                      </span>
+                      <% if (item.discount_percent > 0) { %>
+                        <span class="tag tag--accent">
+                          <%= t('menu.discount') %> <%= item.discount_percent %>%
+                        </span>
+                        <span class="tag tag--ok">
+                          <%= formatPrice(discountedPrice(item.price, item.discount_percent)) %>
+                        </span>
+                      <% } %>
+                      <% if (item.rating !== null) { %>
+                        <span class="tag">★ <%= formatRating(item.rating) %></span>
+                      <% } %>
+                      <span class="tag tag--<%= item.is_active ? 'ok' : 'off' %>">
+                        <%= item.is_active ? t('admin.active') : t('admin.inactive') %>
+                      </span>
+                      <span class="tag tag--muted">
+                        <%= t('admin.display_order') %>: <%= item.sort_order %>
+                      </span>
+                    </p>
+                  </div>
+
+                  <div class="admin-row__actions">
+                    <div class="order-group" role="group" aria-label="<%= t('admin.display_order') %>">
+                      <% if (index > 0) { %>
+                        <form method="post" action="/admin/items/<%= item.id %>/move">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                          <input type="hidden" name="direction" value="up" />
+                          <button class="icon-btn" type="submit" title="<%= t('admin.move_up') %>"
+                                  aria-label="<%= t('admin.move_up') %>">↑</button>
+                        </form>
+                      <% } %>
+                      <% if (index < rows.length - 1) { %>
+                        <form method="post" action="/admin/items/<%= item.id %>/move">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                          <input type="hidden" name="direction" value="down" />
+                          <button class="icon-btn" type="submit" title="<%= t('admin.move_down') %>"
+                                  aria-label="<%= t('admin.move_down') %>">↓</button>
+                        </form>
+                      <% } %>
+                    </div>
+
+                    <form method="post" action="/admin/items/<%= item.id %>/toggle">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                      <button class="btn btn--sm btn--ghost" type="submit">
+                        <%= item.is_active ? t('admin.toggle_deactivate') : t('admin.toggle_activate') %>
+                      </button>
+                    </form>
+
+                    <a class="btn btn--sm" href="/admin/items/<%= item.id %>/edit"><%= t('admin.edit') %></a>
+                    <a class="btn btn--sm btn--danger" href="/admin/items/<%= item.id %>/delete">
+                      <%= t('admin.delete') %>
+                    </a>
+                  </div>
+                </li>
+              <% }); %>
+            </ul>
+          </section>
+        <% }); %>
+      </main>
+    </div>
+<%- include('../partials/foot') %>
