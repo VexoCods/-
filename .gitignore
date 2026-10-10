@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Local data (SQLite database + uploaded images) - never commit these
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Environment files with real secrets
+.env
+.env.local
+.env.*.local
+
+# Generated release artifacts
+dist/
+*.zip
+
+# Logs and editor/OS noise
+*.log
+npm-debug.log*
+.DS_Store
+.idea/
+.vscode/

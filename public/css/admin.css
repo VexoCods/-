@@ -1,0 +1,473 @@
+/* ==========================================================================
+   Digital Menu - admin panel styles
+   Loaded after style.css, so it reuses the same tokens and components and only
+   adds the admin-specific layout: a top bar, a section nav, forms and rows.
+   The admin is designed to be usable one-handed on a phone as well as on a
+   laptop: every control is a real button or link, never a hover-only affordance.
+   ========================================================================== */
+
+.page-admin {
+  background: var(--bg);
+}
+
+.admin-shell {
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   Top bar
+   -------------------------------------------------------------------------- */
+.admin-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: var(--space-3) var(--space-4) var(--space-2);
+  background: var(--surface);
+  border-block-end: 1px solid var(--border);
+}
+
+.admin-top__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.admin-top__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.admin-top__brand:hover {
+  text-decoration: none;
+}
+
+.admin-top__brand-mark {
+  color: var(--accent);
+}
+
+.admin-top__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.admin-top__user {
+  max-width: 1100px;
+  margin: var(--space-2) auto 0;
+  color: var(--muted-2);
+  font-size: 12px;
+}
+
+.admin-nav {
+  display: flex;
+  gap: var(--space-2);
+  max-width: 1100px;
+  margin: var(--space-3) auto 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.admin-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-nav__link {
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.admin-nav__link:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.admin-nav__link.is-active {
+  background: var(--accent-soft);
+  border-color: rgba(255, 107, 0, 0.35);
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Main content
+   -------------------------------------------------------------------------- */
+.admin-main {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: var(--space-5) var(--space-4) var(--space-6);
+}
+
+.admin-main--narrow {
+  max-width: 720px;
+}
+
+.admin-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-4);
+}
+
+.admin-head__title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.admin-group {
+  margin-block-end: var(--space-5);
+}
+
+.admin-group__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-3);
+}
+
+.admin-group__title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.admin-group__title-en {
+  margin-inline-start: var(--space-2);
+  color: var(--muted-2);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   Cards and forms
+   -------------------------------------------------------------------------- */
+.card {
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form--inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+  width: 100%;
+  margin-block-start: var(--space-3);
+  padding-block-start: var(--space-3);
+  border-block-start: 1px solid var(--border);
+}
+
+.form--inline .field {
+  flex: 1 1 180px;
+}
+
+.form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field__label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.field__input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.field__input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.field__input--area {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field__input--file {
+  padding: 9px 12px;
+  background: var(--surface-2);
+}
+
+.field__help {
+  color: var(--muted-2);
+  font-size: 12px;
+}
+
+.field__error {
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.field__current {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.field__current-image {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.field-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Item / category rows
+   -------------------------------------------------------------------------- */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.admin-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.admin-row--inactive {
+  opacity: 0.65;
+}
+
+.admin-row__thumb {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.admin-row__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-row__info {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.admin-row__name {
+  font-weight: 700;
+}
+
+.admin-row__sub {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.admin-row__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-block-start: 6px;
+}
+
+.admin-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+
+.order-group {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.order-group form {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Confirmation page
+   -------------------------------------------------------------------------- */
+.confirm {
+  text-align: center;
+}
+
+.confirm__question {
+  margin-block: var(--space-3);
+  font-size: 16px;
+}
+
+.confirm__target {
+  margin-block-end: var(--space-4);
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.confirm .form__actions {
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   QR page
+   -------------------------------------------------------------------------- */
+.qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.qr__image {
+  width: 260px;
+  height: 260px;
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.qr__help {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.qr__url {
+  color: var(--muted);
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.qr__url-label {
+  color: var(--muted-2);
+}
+
+.qr__warning {
+  color: var(--accent-strong);
+  font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Login page
+   -------------------------------------------------------------------------- */
+.page-admin--login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-5) var(--space-4);
+  background: radial-gradient(circle at 50% 0%, #1c1c1c 0%, var(--bg) 60%);
+}
+
+.login {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login__card {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.login__brand {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.login__title {
+  margin-block: var(--space-2) var(--space-4);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive tweaks
+   -------------------------------------------------------------------------- */
+@media (min-width: 640px) {
+  .field-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .field-grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-row__actions {
+    margin-inline-start: 0;
+    width: 100%;
+  }
+
+  .admin-row__actions .btn {
+    flex: 1 1 auto;
+  }
+}

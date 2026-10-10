@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Digital menu">
+  <rect width="64" height="64" rx="16" fill="#121212" />
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="#ff6b00" />
+  <path d="M22 20v10a5 5 0 0 0 5 5v9M32 20v10a5 5 0 0 1-5 5" fill="none" stroke="#1a0d00" stroke-width="3.2" stroke-linecap="round" />
+  <path d="M44 20c-3 0-4 6-4 11s1 8 4 8v5" fill="none" stroke="#1a0d00" stroke-width="3.2" stroke-linecap="round" />
+</svg>

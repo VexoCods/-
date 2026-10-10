@@ -1,0 +1,28 @@
+<%#
+  Confirmation step before a destructive action.
+  It is a real page rather than a JavaScript `confirm()` so that the step also
+  exists when scripts are blocked - and because a CSP without `unsafe-inline`
+  forbids inline handlers anyway.
+%>
+<%- include('../partials/head', { pageTitle: t('admin.delete'), extraCss: 'admin.css' }) %>
+  <body class="page-admin">
+    <div class="admin-shell">
+      <%- include('partials/nav') %>
+
+      <main class="admin-main admin-main--narrow">
+        <div class="card confirm">
+          <h1 class="admin-head__title"><%= t('admin.delete') %></h1>
+          <p class="confirm__question"><%= question %></p>
+          <p class="confirm__target"><%= target %></p>
+
+          <form method="post" action="<%= action %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <div class="form__actions">
+              <button class="btn btn--danger" type="submit"><%= t('admin.delete') %></button>
+              <a class="btn btn--ghost" href="<%= cancelHref %>"><%= t('admin.cancel') %></a>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+<%- include('../partials/foot') %>

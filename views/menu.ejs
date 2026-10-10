@@ -1,0 +1,221 @@
+<%#
+  Public menu (also used, with isPreviewPage=true, by the admin preview).
+  Everything is rendered on the server: with JavaScript switched off the visitor
+  still sees the full menu, and the search box/chips only add filtering on top.
+%>
+<%- include('partials/head', { pageTitle, robots: isPreviewPage ? 'noindex, nofollow' : 'index, follow' }) %>
+  <body class="page-menu">
+    <% if (isPreviewPage) { %>
+      <div class="preview-bar" role="status">
+        <span class="preview-bar__text"><%= t('admin.preview_notice') %></span>
+        <a class="preview-bar__link" href="<%= typeof previewBackLink !== 'undefined' ? previewBackLink : '/admin' %>">
+          <%= t('admin.back') %>
+        </a>
+      </div>
+    <% } %>
+
+    <header class="menu-header">
+      <div class="menu-header__bar">
+        <div>
+          <p class="menu-header__eyebrow"><%= t('app.tagline') %></p>
+          <p class="menu-header__brand"><%= appName %></p>
+        </div>
+        <a
+          class="lang-switch"
+          href="<%= langSwitchUrl %>"
+          hreflang="<%= otherLang %>"
+          rel="alternate"
+        ><%= t('lang.switch') %></a>
+      </div>
+
+      <div class="search">
+        <label class="sr-only" for="menu-search"><%= t('menu.search_label') %></label>
+        <span class="search__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+        </span>
+        <input
+          id="menu-search"
+          class="search__input"
+          type="search"
+          name="q"
+          placeholder="<%= t('menu.search_placeholder') %>"
+          autocomplete="off"
+          enterkeyhint="search"
+        />
+        <button
+          type="button"
+          class="search__clear"
+          id="menu-search-clear"
+          hidden
+          aria-label="<%= t('menu.clear_search') %>"
+        >×</button>
+      </div>
+
+      <nav class="chips" id="menu-chips" aria-label="<%= t('menu.categories_label') %>">
+        <button type="button" class="chip chip--active" data-category="all">
+          <%= t('menu.all_categories') %>
+        </button>
+        <% categories.forEach(function (category) { %>
+          <button type="button" class="chip" data-category="<%= category.id %>">
+            <span lang="fa" dir="rtl"><%= category.name_fa %></span>
+            <% if (category.name_en && category.name_en !== category.name_fa) { %>
+              <span class="chip__en" lang="en" dir="ltr"><%= category.name_en %></span>
+            <% } %>
+          </button>
+        <% }); %>
+      </nav>
+    </header>
+
+    <main class="menu-main" id="menu-main">
+      <% if (groups.length === 0) { %>
+        <p class="empty-state"><%= t('menu.empty') %></p>
+      <% } else { %>
+        <p class="search-status" id="menu-status" hidden><%= t('menu.no_results') %></p>
+
+        <% groups.forEach(function (group) { %>
+          <section
+            class="category-block"
+            id="category-<%= group.category.id %>"
+            data-category-section="<%= group.category.id %>"
+            aria-labelledby="category-title-<%= group.category.id %>"
+          >
+            <div class="category-block__head">
+              <h2 class="category-block__title" id="category-title-<%= group.category.id %>">
+                <span lang="fa" dir="rtl"><%= group.category.name_fa %></span>
+              </h2>
+              <% if (group.category.name_en && group.category.name_en !== group.category.name_fa) { %>
+                <p class="category-block__title-en" lang="en" dir="ltr"><%= group.category.name_en %></p>
+              <% } %>
+              <span class="category-block__rule" aria-hidden="true"></span>
+            </div>
+
+            <ul class="item-list">
+              <% group.items.forEach(function (item) { %>
+                <%
+                  // Persian is the primary language; the secondary description is
+                  // only used when the primary one is empty.
+                  const primaryDesc = lang === 'fa'
+                    ? (item.descriptionFa || item.descriptionEn)
+                    : (item.descriptionEn || item.descriptionFa);
+                  const searchText = [
+                    item.nameFa, item.nameEn, item.descriptionFa, item.descriptionEn
+                  ].join(' ').toLowerCase();
+                %>
+                <li
+                  class="item-card<%= item.hasDiscount ? ' item-card--discount' : '' %><%= item.isActive ? '' : ' item-card--inactive' %>"
+                  data-item
+                  data-category="<%= item.categoryId %>"
+                  data-search="<%= searchText %>"
+                  data-name-fa="<%= item.nameFa %>"
+                  data-name-en="<%= item.nameEn %>"
+                  data-desc-fa="<%= item.descriptionFa %>"
+                  data-desc-en="<%= item.descriptionEn %>"
+                  data-price="<%= item.price %>"
+                  data-final-price="<%= item.finalPrice %>"
+                  data-discount="<%= item.discountPercent %>"
+                  data-rating="<%= item.rating === null ? '' : item.rating %>"
+                  data-image="<%= item.imagePath || '' %>"
+                  data-alt-fa="<%= item.altFa %>"
+                  data-alt-en="<%= item.altEn %>"
+                >
+                  <button
+                    type="button"
+                    class="item-card__hit"
+                    data-open-item
+                    aria-label="<%= t('menu.details') %>: <%= item.nameFa %>"
+                  >
+                    <span class="item-card__media">
+                      <% if (item.imagePath) { %>
+                        <img
+                          src="<%= item.imagePath %>"
+                          alt="<%= lang === 'fa' ? item.altFa : (item.altEn || item.altFa) %>"
+                          width="112" height="112" loading="lazy" decoding="async"
+                        />
+                      <% } else { %>
+                        <img
+                          src="/static/img/placeholder-food.svg"
+                          alt=""
+                          aria-hidden="true"
+                          width="112" height="112" loading="lazy" decoding="async"
+                        />
+                      <% } %>
+                      <% if (item.hasDiscount) { %>
+                        <span class="badge badge--discount"><%= item.discountPercent %>%</span>
+                      <% } %>
+                      <% if (!item.isActive) { %>
+                        <span class="badge badge--inactive"><%= t('admin.inactive') %></span>
+                      <% } %>
+                    </span>
+
+                    <span class="item-card__body">
+                      <span class="item-card__name" lang="fa" dir="rtl"><%= item.nameFa %></span>
+                      <% if (item.nameEn) { %>
+                        <span class="item-card__name-en" lang="en" dir="ltr"><%= item.nameEn %></span>
+                      <% } %>
+                      <% if (primaryDesc) { %>
+                        <span class="item-card__desc"><%= primaryDesc %></span>
+                      <% } %>
+                      <span class="item-card__meta">
+                        <% if (item.rating !== null) { %>
+                          <span class="rating" title="<%= t('menu.rating') %>">
+                            <span class="rating__star" aria-hidden="true">★</span>
+                            <span class="rating__value"><%= formatRating(item.rating) %></span>
+                          </span>
+                        <% } %>
+                        <% if (item.hasDiscount) { %>
+                          <span class="tag tag--accent">
+                            <%= t('menu.discount') %> <%= item.discountPercent %>%
+                          </span>
+                        <% } %>
+                      </span>
+                    </span>
+
+                    <span class="item-card__prices">
+                      <% if (item.hasDiscount) { %>
+                        <span class="price price--old">
+                          <del><%= formatPrice(item.price) %></del>
+                        </span>
+                      <% } %>
+                      <span class="price price--final">
+                        <%= formatPrice(item.finalPrice) %>
+                        <span class="price__unit"><%= t('menu.currency') %></span>
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              <% }); %>
+            </ul>
+          </section>
+        <% }); %>
+      <% } %>
+    </main>
+
+    <dialog
+      class="item-dialog"
+      id="item-dialog"
+      aria-labelledby="item-dialog-title"
+      data-currency="<%= t('menu.currency') %>"
+      data-hint="<%= t('menu.show_to_cashier') %>"
+    >
+      <div class="item-dialog__inner">
+        <button
+          type="button"
+          class="item-dialog__close"
+          data-close-item
+          aria-label="<%= t('menu.close') %>"
+        >×</button>
+        <img class="item-dialog__image" id="item-dialog-image" src="/static/img/placeholder-food.svg" alt="" />
+        <div class="item-dialog__body">
+          <h2 class="item-dialog__title" id="item-dialog-title"></h2>
+          <p class="item-dialog__title-en" id="item-dialog-title-en" lang="en" dir="ltr"></p>
+          <p class="item-dialog__meta" id="item-dialog-meta"></p>
+          <p class="item-dialog__desc" id="item-dialog-desc"></p>
+          <p class="item-dialog__price" id="item-dialog-price"></p>
+          <p class="item-dialog__hint"><%= t('menu.show_to_cashier') %></p>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="/static/js/menu.js" defer></script>
+<%- include('partials/foot') %>

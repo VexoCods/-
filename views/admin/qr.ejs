@@ -1,0 +1,34 @@
+<%#
+  QR code page.
+  The QR image is generated server-side as a PNG (see routes/admin.js) - an
+  image format that cannot carry script, unlike SVG.
+%>
+<%- include('../partials/head', { pageTitle, extraCss: 'admin.css' }) %>
+  <body class="page-admin">
+    <div class="admin-shell">
+      <%- include('partials/nav') %>
+
+      <main class="admin-main admin-main--narrow">
+        <%- include('../partials/flash') %>
+
+        <h1 class="admin-head__title"><%= t('admin.qr') %></h1>
+
+        <div class="card qr">
+          <img class="qr__image" src="/admin/qr.png" alt="<%= t('admin.qr') %>" width="320" height="320" />
+          <p class="qr__help"><%= t('admin.qr_help') %></p>
+          <p class="qr__url">
+            <span class="qr__url-label"><%= t('admin.qr_url') %>:</span>
+            <a href="<%= url %>" dir="ltr" rel="noopener noreferrer"><%= url %></a>
+          </p>
+          <% if (!usesEnvUrl) { %>
+            <p class="qr__warning"><%= t('admin.qr_missing_base') %></p>
+          <% } %>
+          <p>
+            <a class="btn btn--primary" href="/admin/qr.png" download="menu-qr.png">
+              <%= t('admin.qr_download') %>
+            </a>
+          </p>
+        </div>
+      </main>
+    </div>
+<%- include('../partials/foot') %>

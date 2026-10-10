@@ -1,0 +1,15 @@
+<%#
+  Flash message block.
+  `flash` is consumed by the request context middleware, so a message shows up
+  exactly once (right after the redirect that produced it).
+%>
+<% if (flash && flash.message) { %>
+  <div
+    class="flash flash--<%= flash.type === 'success' ? 'success' : 'error' %>"
+    role="status"
+    aria-live="polite"
+  >
+    <span class="flash__icon" aria-hidden="true"><%= flash.type === 'success' ? '✓' : '!' %></span>
+    <span class="flash__text"><%= flash.message %></span>
+  </div>
+<% } %>

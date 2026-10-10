@@ -1,0 +1,176 @@
+<%#
+  Add / edit an item.
+  Every field carries its server-side error message underneath it, and the
+  values the owner typed are echoed back (escaped) so nothing is lost on a
+  validation failure.
+%>
+<%- include('../partials/head', { pageTitle, extraCss: 'admin.css' }) %>
+  <body class="page-admin">
+    <div class="admin-shell">
+      <%- include('partials/nav') %>
+
+      <main class="admin-main admin-main--narrow">
+        <%- include('../partials/flash') %>
+
+        <div class="admin-head">
+          <h1 class="admin-head__title"><%= isNew ? t('admin.add_item') : t('admin.edit_item') %></h1>
+          <a class="btn btn--ghost" href="/admin"><%= t('admin.back') %></a>
+        </div>
+
+        <% if (categories.length === 0) { %>
+          <p class="empty-state">
+            <%= t('error.invalid_category') %>
+            <a href="/admin/categories"><%= t('admin.add_category') %></a>
+          </p>
+        <% } %>
+
+        <form
+          class="form card"
+          method="post"
+          action="<%= isNew ? '/admin/items' : '/admin/items/' + itemId %>"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+          <div class="field">
+            <label class="field__label" for="category_id"><%= t('admin.category') %></label>
+            <select class="field__input" id="category_id" name="category_id" required>
+              <% categories.forEach(function (category) { %>
+                <option
+                  value="<%= category.id %>"
+                  <%= String(values.categoryId) === String(category.id) ? 'selected' : '' %>
+                ><%= category.name_fa %><%= category.name_en ? ' — ' + category.name_en : '' %></option>
+              <% }); %>
+            </select>
+            <% if (errors.category_id) { %><p class="field__error"><%= errors.category_id %></p><% } %>
+          </div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label class="field__label" for="name_fa"><%= t('admin.name_fa') %></label>
+              <input
+                class="field__input" id="name_fa" name="name_fa" type="text" required
+                maxlength="120" value="<%= values.nameFa %>" dir="rtl" lang="fa"
+              />
+              <% if (errors.name_fa) { %><p class="field__error"><%= errors.name_fa %></p><% } %>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="name_en"><%= t('admin.name_en') %></label>
+              <input
+                class="field__input" id="name_en" name="name_en" type="text"
+                maxlength="120" value="<%= values.nameEn %>" dir="ltr" lang="en"
+              />
+              <% if (errors.name_en) { %><p class="field__error"><%= errors.name_en %></p><% } %>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="description_fa"><%= t('admin.description_fa') %></label>
+            <textarea
+              class="field__input field__input--area" id="description_fa" name="description_fa"
+              rows="3" maxlength="600" dir="rtl" lang="fa"
+            ><%= values.descriptionFa %></textarea>
+            <% if (errors.description_fa) { %><p class="field__error"><%= errors.description_fa %></p><% } %>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="description_en"><%= t('admin.description_en') %></label>
+            <textarea
+              class="field__input field__input--area" id="description_en" name="description_en"
+              rows="3" maxlength="600" dir="ltr" lang="en"
+            ><%= values.descriptionEn %></textarea>
+            <% if (errors.description_en) { %><p class="field__error"><%= errors.description_en %></p><% } %>
+          </div>
+
+          <div class="field-grid field-grid--three">
+            <div class="field">
+              <label class="field__label" for="price"><%= t('admin.price') %></label>
+              <input
+                class="field__input" id="price" name="price" type="number" required
+                min="1" max="1000000000" step="1" inputmode="numeric"
+                value="<%= values.price %>" dir="ltr"
+              />
+              <% if (errors.price) { %><p class="field__error"><%= errors.price %></p><% } %>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="discount_percent"><%= t('admin.discount_percent') %></label>
+              <input
+                class="field__input" id="discount_percent" name="discount_percent" type="number"
+                min="0" max="100" step="1" inputmode="numeric"
+                value="<%= values.discountPercent %>" dir="ltr"
+              />
+              <% if (errors.discount_percent) { %><p class="field__error"><%= errors.discount_percent %></p><% } %>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="rating"><%= t('admin.rating') %></label>
+              <input
+                class="field__input" id="rating" name="rating" type="number"
+                min="0" max="5" step="0.1" inputmode="decimal"
+                value="<%= values.rating %>" dir="ltr"
+              />
+              <% if (errors.rating) { %><p class="field__error"><%= errors.rating %></p><% } %>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="image"><%= t('admin.image') %></label>
+            <% if (values.imagePath) { %>
+              <p class="field__current">
+                <img
+                  class="field__current-image"
+                  src="<%= values.imagePath %>"
+                  alt="<%= t('admin.current_image') %>"
+                  width="96" height="96"
+                />
+                <label class="check">
+                  <input type="checkbox" name="remove_image" value="1" />
+                  <span><%= t('admin.remove_image') %></span>
+                </label>
+              </p>
+            <% } %>
+            <input
+              class="field__input field__input--file" id="image" name="image" type="file"
+              accept="image/jpeg,image/png,image/webp"
+            />
+            <p class="field__help"><%= t('admin.image_help') %></p>
+            <% if (errors.image) { %><p class="field__error"><%= errors.image %></p><% } %>
+          </div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label class="field__label" for="alt_fa"><%= t('admin.alt_fa') %></label>
+              <input
+                class="field__input" id="alt_fa" name="alt_fa" type="text"
+                maxlength="200" value="<%= values.altFa %>" dir="rtl" lang="fa"
+              />
+              <% if (errors.alt_fa) { %><p class="field__error"><%= errors.alt_fa %></p><% } %>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="alt_en"><%= t('admin.alt_en') %></label>
+              <input
+                class="field__input" id="alt_en" name="alt_en" type="text"
+                maxlength="200" value="<%= values.altEn %>" dir="ltr" lang="en"
+              />
+              <% if (errors.alt_en) { %><p class="field__error"><%= errors.alt_en %></p><% } %>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" name="is_active" value="1" <%= values.isActive ? 'checked' : '' %> />
+              <span><%= t('admin.active') %></span>
+            </label>
+          </div>
+
+          <div class="form__actions">
+            <button class="btn btn--primary" type="submit"><%= t('admin.save') %></button>
+            <a class="btn btn--ghost" href="/admin"><%= t('admin.cancel') %></a>
+          </div>
+        </form>
+      </main>
+    </div>
+<%- include('../partials/foot') %>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<%#
+  Shared <head>.
+  Notes:
+   - lang/dir come from the request context, so the same template serves the
+     Persian (RTL) and English (LTR) menu.
+   - `crossorigin` on the font preload is required because fonts are always
+     fetched in CORS mode, even same-origin.
+   - The CSP forbids inline styles and inline scripts, so nothing here uses
+     them and all behaviour lives in /static/js/*.
+%>
+<html lang="<%= lang %>" dir="<%= dir %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#121212" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content="<%= typeof robots !== 'undefined' ? robots : 'noindex, nofollow' %>" />
+    <title><%= pageTitle %> · <%= appName %></title>
+
+    <link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/static/fonts/Vazirmatn-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <% if (typeof extraCss !== 'undefined' && extraCss) { %>
+      <link rel="stylesheet" href="/static/css/<%= extraCss %>" />
+    <% } %>
+  </head>
